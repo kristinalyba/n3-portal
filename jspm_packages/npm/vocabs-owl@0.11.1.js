@@ -1,1 +1,0 @@
-module.exports = require("npm:vocabs-owl@0.11.1/owl.js");

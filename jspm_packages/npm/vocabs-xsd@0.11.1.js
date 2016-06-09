@@ -1,1 +1,0 @@
-module.exports = require("npm:vocabs-xsd@0.11.1/xsd.js");

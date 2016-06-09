@@ -1,1 +1,0 @@
-module.exports = require("npm:vocabs-as@0.12.0/as.js");

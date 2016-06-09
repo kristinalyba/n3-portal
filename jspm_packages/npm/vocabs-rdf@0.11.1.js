@@ -1,1 +1,0 @@
-module.exports = require("npm:vocabs-rdf@0.11.1/rdf.js");

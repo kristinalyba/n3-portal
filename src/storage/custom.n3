@@ -1,0 +1,120 @@
+	@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+
+:Person a owl:Class;
+		rdfs:subClassOf owl:Thing.
+
+:firstName a rdf:Property;
+		   rdfs:domain :Person;
+		   rdfs:range xsd:string.
+
+:lastName a rdf:Property;
+		  rdfs:domain :Person;
+		  rdfs:range xsd:string.
+
+:fullName a rdf:Property;
+		  rdfs:domain :Person;				
+		  rdfs:range xsd:string.
+
+:dateOfBirth a rdf:Property;
+		 rdfs:domain :Person;
+		 rdfs:range xsd:dateTime.
+
+:mobilePhone a rdf:Property;
+		 rdfs:domain :Person;
+		 rdfs:range xsd:string.
+
+:email a rdf:Property;
+		 rdfs:domain :Person;
+		 rdfs:range xsd:string.
+
+
+:Student a owl:Class;
+		 rdfs:subClassOf :Person.
+
+:belongsToGroup a rdf:ObjectProperty;
+         a owl:SymmetricProperty;
+		 rdfs:domain :Student;
+		 rdfs:range :Group.
+
+:studies a rdf:Property;
+		 rdfs:domain :Student;
+		 rdfs:range :Subject.
+
+
+:Teacher a owl:Class;
+		 rdfs:subClassOf :Person.
+
+:teachesSubject a rdf:Property;
+		        rdfs:domain :Teacher;
+		        rdfs:range :Subject.
+
+:teachesAt a rdf:Property;
+		   rdfs:domain :Teacher;
+		   rdfs:range :Group.
+
+:title a rdf:Property;
+		 rdfs:domain :Teacher;
+		 rdfs:range rdfs:Literal.
+
+
+:Group a owl:Class;
+	   rdfs:subClassOf :Thing.
+
+:name a rdf:Property;
+		rdfs:domain :Group;
+		rdfs:range xsd:string.
+
+:yearStarted a rdf:Property;
+		 rdfs:domain :Group;
+		 rdfs:range xsd:gYear.
+
+:curator a rdf:Property;
+		 rdfs:domain :Group;
+		 rdfs:range :Teacher.
+
+:students a rdf:Property;
+			a owl:SymmetricProperty;
+		    rdfs:domain :Group;
+		    rdfs:range :Student.
+
+:subjects a rdf:Property;
+         :semestr xsd:positiveInteger;
+         :teacher :Teacher;
+		 rdfs:domain :Group;
+		 rdfs:range :Subjects.
+
+
+:Subject a owl:Class;
+	   rdfs:subClassOf :Thing.
+
+:name a rdf:Property;
+		rdfs:domain :Subject;
+		rdfs:range xsd:string.
+
+:task a rdf:Property;
+	  rdfs:domain :Subject;
+	  rdfs:range :Task.
+
+:teacher a rdf:Property;
+		 rdfs:domain :Subject;
+		 rdfs:range :Teacher.
+
+
+:Task a owl:Class;
+	   rdfs:subClassOf :Thing.
+
+:name a rdf:Property;
+		rdfs:domain :Task;
+		rdfs:range xsd:string.
+
+:type a rdf:Property;
+	  rdfs:domain :Task;
+	  rdfs:range xsd:string.
+
+:grade a rdf:Property;
+	  rdfs:domain :Task;
+	  rdfs:range xsd:string.
+

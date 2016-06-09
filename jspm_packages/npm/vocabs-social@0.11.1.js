@@ -1,0 +1,1 @@
+module.exports = require("npm:vocabs-social@0.11.1/social.js");

@@ -1,0 +1,1 @@
+module.exports = require("npm:reasoner@0.3.0/lib/reasoner");

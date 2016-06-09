@@ -1,0 +1,21 @@
+<template>
+<div class="row">
+  <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+    <div class="sidebar-nav">
+      <div class="navbar navbar-default">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#/home/planned">Planned for today</a></li>
+            <li><a href="#/home/schedule">Schedule</a></li>
+            <li><a href="#/home/updates">Recently updated</a></li>
+            <li><a href="#/home/notifications">Notifications <span class="badge">45</span></a></li>
+          </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
+  	<div class="panel-view">
+   		<router-view></router-view>	
+  	</div>
+  </div>
+</div>
+</template>

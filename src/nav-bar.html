@@ -1,0 +1,31 @@
+<template bindable="router">
+  <nav id="custom-bootstrap-menu" class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-main">
+          <span class="sr-only">Toggle Navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+          <i class="fa fa-home"></i>
+          <span>${router.title}</span>
+        </a>
+      </div>
+  
+      <div class="collapse navbar-collapse" id="nav-main">
+        <ul class="nav navbar-nav">
+          <li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
+            <a href.bind="row.href">${row.title}</a>
+          </li>          
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="${row.isActive ? 'active pull-right' : 'pull-right'}">
+            <a href="#/login"><span class="glyphicon glyphicon-user"></span> Log out</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</template>

@@ -1,0 +1,1 @@
+module.exports = require("npm:rfc5646@2.0.0/src/main.js");

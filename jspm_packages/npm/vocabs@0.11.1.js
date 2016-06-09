@@ -1,0 +1,1 @@
+module.exports = require("npm:vocabs@0.11.1/vocabulary.js");

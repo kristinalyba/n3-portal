@@ -1,0 +1,25 @@
+{
+  "name": "rfc5646",
+  "version": "2.0.0",
+  "description": "RFC 5646 Language Tags Implementation",
+  "license": "Public Domain",
+  "keywords": [
+    "rfc5646",
+    "languagetag"
+  ],
+  "maintainers": [
+    "James M Snell <jasnell@us.ibm.com> (http://www.chmod777self.com)"
+  ],
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "async": "^1.4.0",
+    "mocha": "^2.2.5"
+  },
+  "main": "./src/main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jasnell/rfc5646"
+  }
+}

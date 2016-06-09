@@ -1,0 +1,1 @@
+module.exports = require("npm:n3@0.4.5/N3.js");

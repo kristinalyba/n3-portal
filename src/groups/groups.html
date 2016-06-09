@@ -1,0 +1,38 @@
+<template>
+	<div class="row">
+	    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+	      <div class="sidebar-nav">
+	        <div class="navbar navbar-default">
+	            <ul class="nav navbar-nav">
+	              <li class="${group.id === activeId ? 'active': ''}" repeat.for="group of groups"><a click.delegate="showGroup(group.id)">${group.name}</a></li>
+	              <li><a click.delegate="navigateToGroup(false)"><span class="glyphicon glyphicon-plus"></span> Add group</a></li>
+	            </ul>
+	        </div>
+	      </div>
+	    </div>
+		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10"> 
+			<div class="panel-view">
+				<div class="panel panel-default" if.bind="group.name">
+					<div class="panel-heading">${group.name}</div>
+					<table class="table" align="left">
+						<tr>
+							<th>№</th>
+							<th>Student's name</th>
+							<th>Date of Birth</th>
+							<th>Phone Number</th>
+							<th>E-mail</th>
+						</tr>
+				    	<tr repeat.for="student of group.students">
+				    		<td>${$index+1}</td>
+				    		<td>${student.fullName}</td>
+				    		<td>${student.dateOfBirth}</td>
+				    		<td>${student.mobilePhone}</td>
+				    		<td>${student.email}</td>
+				    	</tr>
+					</table>
+				</div>
+			</div>
+			<button class="btn btn-add" click.delegate="navigateToStudent(false)">Add student</button>
+		</div>
+	</div>
+</template>

@@ -1,0 +1,1 @@
+module.exports = require("npm:vocabs-interval@0.11.1/interval.js");

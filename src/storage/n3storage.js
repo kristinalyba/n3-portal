@@ -11,6 +11,7 @@ var SUBJECT_PREFIX      = 'subject#';
 var TEACHER_PREFIX      = 'teacher#';
 var CUSTOM_VOCAB_PREFIX = 'vocab#';
 
+
 function N3Storage () {
     this._storage = N3.Store();
     this._prefixes = { prefixes: {
@@ -33,6 +34,7 @@ N3Storage.prototype._initStorage = function () {
     var self = this;
     self._entities = {
         'students': path.join(__dirname + '/student.n3'),
+        'fields': path.join(__dirname + '/field.n3'),
         'subjects': path.join(__dirname + '/subject.n3'),
         'groups': path.join(__dirname + '/group.n3'),
         'teachers': path.join(__dirname + '/teacher.n3'),
@@ -60,9 +62,7 @@ N3Storage.prototype._initStorage = function () {
 };
 
 N3Storage.prototype.find = function (subject, predicate, object) {
-    var result = this._storage.find(subject, predicate, object);
-    console.log(result);
-    return result;
+    return this._storage.find(subject, predicate, object);
 };
 
 N3Storage.prototype.addTriples = function (entityName, triples) {
@@ -163,6 +163,34 @@ N3Storage.prototype.getList = function (node, res) {
     }
     return res;
 };
+//////////////////////////
+/////Reasoning methods////
+
+N3Storage.prototype.isOfType = function (subject, type) {
+    var self = this;
+    var findType = self._storage.find(subject, vocabs.rdf.type, null);
+    var nodeType = findType.length && findType[0].object;
+
+    var inherits =
+        subject === type ||
+        nodeType === type ||
+        self._storage.find(subject, vocabs.rdfs.subClassOf, type).length > 0;
+
+    if (!nodeType && !inherits) {
+        return false;
+    }
+
+    return inherits || self.isOfType(nodeType, type);
+};
+
+N3Storage.prototype.findByType = function (type) {
+    var self = this;
+    return self._storage.find(null, vocabs.rdf.type)
+        .filter(function (triple) {
+            return triple.object !== vocabs.owl.Class && self.isOfType(triple.subject, type);
+        });
+}
+
 
 ////////////////////////
 ////// HELPERS /////////
@@ -202,6 +230,4 @@ function equel(first, next) {
 ////////////////////////
 ////// EXPORTS /////////
 
-module.exports = {
-        storage: new N3Storage()
-    }
+module.exports = new N3Storage();

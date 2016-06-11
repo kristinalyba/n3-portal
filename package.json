@@ -22,7 +22,6 @@
     "jspm": "^0.16.35",
     "linkeddata-vocabs": "^0.11.1",
     "n3": "^0.4.5",
-    "reasoner": "^0.3.0",
     "replacestream": "^4.0.0"
   }
 }

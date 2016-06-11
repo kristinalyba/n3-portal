@@ -1,4 +1,4 @@
-var n3storage      = require('../storage/n3storage').storage;
+var n3storage      = require('../storage/n3storage');
 var N3Util         = require('N3').Util;
 var studentService = require('./studentService');
 

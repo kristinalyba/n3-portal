@@ -1,4 +1,4 @@
-var n3storage    = require('../storage/n3storage').storage;
+var n3storage    = require('../storage/n3storage');
 var N3Util       = require('N3').Util;
 
 var helpers      = require('./helpers');
@@ -51,7 +51,7 @@ SubjectService.prototype._composeInstance = function (id, triples) {
     subject.id = id;
     triples.forEach(function (triple) {
         switch (triple.predicate) {
-            case custom.subject.Subject:
+            case custom.subject.name:
                 subject.name = getValue(triple.object);
                 break;
 

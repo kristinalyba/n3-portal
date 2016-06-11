@@ -11,10 +11,10 @@
 @prefix vocab: <vocab#>.
 
 
-field:Field a rdf:Class;
+field:Field a owl:Class;
 		rdfs:subClassOf owl:Thing.
 
-field:name a rfd:Property;
+field:name a rdf:Property;
 		rdfs:domain subject:Subject;
 		rdfs:Range xsd:string.
 

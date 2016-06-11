@@ -7,6 +7,7 @@ var groups      = dataService.groups;
 var teachers    = dataService.teachers;
 var subjects    = dataService.subjects;
 var tasks       = dataService.tasks;
+var fields       = dataService.fields;
 
 var app = express();
 
@@ -51,6 +52,28 @@ apiRouter.route('/groups/:id')
     .delete(function(req, res) {
     	var result = groups.remove(req.params.id);
     	res.json({ message: 'Successfully deleted' });
+    });
+
+// ========= Fields ===========
+apiRouter.route('/fields')
+    .get(function(req, res) {
+        var result = fields.get();
+        res.json(result);
+    })
+    .put(function(req, res) {
+        //if (!req.body) return res.sendStatus(400);
+        var result = fields.add(req.query);
+        res.json(result);
+    });
+
+apiRouter.route('/fields/:id')
+    .get(function(req, res) {
+        var result = fields.get(req.params.id);
+        res.json(result);
+    })
+    .delete(function(req, res) {
+        var result = fields.remove(req.params.id);
+        res.json({ message: 'Successfully deleted' });
     });
 
 // ========= Students ===========

@@ -1,0 +1,55 @@
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+
+@prefix student: <student#>.
+@prefix subject: <subject#>.
+@prefix teacher: <teacher#>.
+@prefix group: <group#>.
+
+group:Group a owl:Class;
+	   rdfs:subClassOf owl:Thing.
+
+group:name a rdf:Property;
+		rdfs:domain group:Group;
+		rdfs:range xsd:string.
+
+group:yearStarted a rdf:Property;
+		 rdfs:domain group:Group;
+		 rdfs:range xsd:gYear.
+
+group:curator a rdf:Property;
+		 rdfs:domain group:Group;
+		 rdfs:range teacher:Teacher.
+
+group:students a rdf:Property;
+			a owl:SymmetricProperty;
+		    rdfs:domain group:Group;
+		    rdfs:range student:Student.
+
+group:subjects a rdf:Property;
+		 rdfs:domain group:Group;
+		 rdfs:range subject:Subject.
+
+group:DA41_123 a group:Group;
+       group:name "DA-41";
+       group:yearStarted "2010";
+       group:curator teacher:Vasil4234;
+       group:students (student:SergiiDenysovich student:OksanaOksanivna student:SergiiDenysov student:IrynaSukhomlin).
+
+group:DA42_123 a group:Group;
+       group:name "DA-42";
+       group:yearStarted "2010";
+       group:curator teacher:Petro4234;
+       group:students (student:GeorgiiAristov student:ArtemArtemov student:OlenaGolovan student:KristinaLyba).
+
+group:DA43_123 a group:Group;
+       group:name "DA-43";
+       group:yearStarted "2010";
+       group:curator teacher:Volodymyr4234.
+
+group:DA44_123 a group:Group;
+       group:name "DA-44";
+       group:yearStarted "2010";
+       group:curator teacher:Anna4234.

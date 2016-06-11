@@ -110,32 +110,7 @@ apiRouter.route('/subjects/:id')
     	var result = subjects.remove(req.params.id);
     	res.json({ message: 'Successfully deleted' });
     });
-// ========= Tasks ===========
-apiRouter.route('/tasks')
-    .get(function(req, res) {
-    	var result = tasks.get();
-    	res.json(result);
-    })
-    .put(function(req, res) {
-		//if (!req.body) return res.sendStatus(400);
-        var result = tasks.add(req.query);
-        res.json(result);
-    });
 
-apiRouter.route('/tasks/:id')
-    .post(function(req, res) {
-    	//if (!req.body) return res.sendStatus(400);
-       	var result = tasks.update(req.params.id, req.query);
-    	res.json(result);
-    })
-    .get(function(req, res) {
-    	var result = tasks.get(req.params.id);
-    	res.json(result);
-    })
-    .delete(function(req, res) {
-    	var result = tasks.remove(req.params.id);
-    	res.json({ message: 'Successfully deleted' });
-    });
 // ========= Teachers ===========
 apiRouter.route('/teachers')
     .get(function(req, res) {

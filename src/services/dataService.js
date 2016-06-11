@@ -10,7 +10,7 @@ export class DataService {
 
 	// students
 	getStudent (id) {
-		return this.client.get('students/' + id);
+		return this.client.get('students/' + encodeURIComponent(id));
 	}
 
 	getStudents () {
@@ -22,16 +22,16 @@ export class DataService {
 	}
 
 	updateStudent (params) {
-		return this.client.post(params);
+		return this.client.post(encodeURIComponent(id));
 	}
 
 	deleteStudent (id) {
-		return this.client.delete(id);
+		return this.client.delete(encodeURIComponent(id));
 	}
 
 	// groups
 	getGroup (id) {
-		return this.client.get('groups/' + id);
+		return this.client.get('groups/' + encodeURIComponent(id));
 	}
 
 	getGroups () {

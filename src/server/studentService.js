@@ -16,7 +16,7 @@ function StudentService () {
 
 StudentService.prototype.add = function (params) {
     var triples = this._composeTriples(null, params);
-    return this._storage.addTriples(triples);
+    return this._storage.addTriples('students', triples);
 }
 
 StudentService.prototype.get = function (id) {
@@ -24,12 +24,12 @@ StudentService.prototype.get = function (id) {
 }
 
 StudentService.prototype.remove = function (id) {
-    return this._storage.removeTriples(id, null, null, true);
+    return this._storage.removeTriples('students', id, null, null, true);
 }
 
 StudentService.prototype.update = function (id, params) {
     var triples = this._composeTriples(id, params);
-    return this._storage.updateTriples(triples);
+    return this._storage.updateTriples('students', triples);
 }
 
 StudentService.prototype._findById = function (id) {
@@ -38,7 +38,7 @@ StudentService.prototype._findById = function (id) {
 }
 
 StudentService.prototype._findAll = function () {
-    var matchingTriples = this._storage.find(null, rdf.type, custom.get('Student'));
+    var matchingTriples = this._storage.find(null, rdf.type, custom.student.Student);
     var students = [];
     matchingTriples.forEach(function (triple) {
         students.push(this._findById(triple.subject));
@@ -51,31 +51,32 @@ StudentService.prototype._composeInstance = function (id, triples) {
     student.id = id;
     triples.forEach(function (triple) {
         switch (triple.predicate) {
-            case custom.get('firstName'):
+            case custom.vocab.firstName:
                 student.firstName = getValue(triple.object);
                 break;
 
-            case custom.get('lastName'):
+            case custom.vocab.lastName:
                 student.lastName = getValue(triple.object);
                 break;
 
-            case custom.get('fullName'):
+            case custom.vocab.fullName:
                 student.fullName = getValue(triple.object);
                 break;
 
-            case custom.get('dateOfBirth'):
+            case custom.vocab.dateOfBirth:
+                console.log(triple.object);
                 student.dateOfBirth = getValue(triple.object);
                 break;
 
-            case custom.get('mobilePhone'):
+            case custom.vocab.mobilePhone:
                 student.mobilePhone = getValue(triple.object);
                 break;
 
-            case custom.get('email'):
+            case custom.vocab.email:
                 student.email = getValue(triple.object);
                 break;
 
-            case custom.get('belongsToGroup'):
+            case custom.student.belongsToGroup:
                 student.groupName = triple.object;
                 break;
         }
@@ -86,29 +87,26 @@ StudentService.prototype._composeInstance = function (id, triples) {
 StudentService.prototype._composeTriples = function(id, params) {
     var triples = [];
     var uniqueUri = id || generateUri(params.firstName + params.lastName);
-    triples.push(createTriple(uniqueUri, rdf.type, custom.get('Student')));
-    triples.push(createTriple(uniqueUri, custom.get('fullName'), params.firstName + ' ' + params.lastName));
+    triples.push(createTriple(uniqueUri, rdf.type, custom.student.Student));
+    triples.push(createTriple(uniqueUri, custom.vocab.fullName, params.firstName + ' ' + params.lastName));
 
     if (params.firstName) {
-        triples.push(createTriple(uniqueUri, custom.get('firstName'), N3Util.createLiteral(params.firstName)));
+        triples.push(createTriple(uniqueUri, custom.vocab.firstName, N3Util.createLiteral(params.firstName)));
     }
     if (params.lastName) {
-        triples.push(createTriple(uniqueUri, custom.get('lastName'), N3Util.createLiteral(params.lastName)));
+        triples.push(createTriple(uniqueUri, custom.vocab.lastName, N3Util.createLiteral(params.lastName)));
     }
     if (params.dateOfBirth) {
-        triples.push(createTriple(uniqueUri, custom.get('dateOfBirth'), N3Util.createLiteral(params.dateOfBirth)));
+        triples.push(createTriple(uniqueUri, custom.vocab.dateOfBirth, N3Util.createLiteral(params.dateOfBirth)));
     }
     if (params.mobilePhone) {
-        triples.push(createTriple(uniqueUri, custom.get('mobilePhone'), N3Util.createLiteral(params.mobilePhone)));
+        triples.push(createTriple(uniqueUri, custom.vocab.mobilePhone, N3Util.createLiteral(params.mobilePhone)));
     }
     if (params.email) {
-        triples.push(createTriple(uniqueUri, custom.get('email'), N3Util.createLiteral(params.email)));
+        triples.push(createTriple(uniqueUri, custom.vocab.email, N3Util.createLiteral(params.email)));
     }
     if (params.belongsToGroup) {
-        triples.push(createTriple(uniqueUri, custom.get('belongsToGroup'), params.belongsToGroup));
-    }
-    if (params.studies) {
-        triples.push(createTriple(uniqueUri, custom.get('studies'), N3Util.createLiteral(params.studies)));
+        triples.push(createTriple(uniqueUri, custom.student.belongsToGroup, params.belongsToGroup));
     }
 
     return triples;

@@ -16,7 +16,7 @@ function SubjectService () {
 
 SubjectService.prototype.add = function (params) {
     var triples = this._composeTriples(null, params);
-    return this._storage.addTriples(triples);
+    return this._storage.addTriples('subjects', triples);
 }
 
 SubjectService.prototype.get = function (id) {
@@ -24,12 +24,12 @@ SubjectService.prototype.get = function (id) {
 }
 
 SubjectService.prototype.remove = function (id) {
-    return this._storage.removeTriples(id, null, null, true);
+    return this._storage.removeTriples('subjects', id, null, null, true);
 }
 
 SubjectService.prototype.update = function (id, params) {
     var triples = this._composeTriples(id, params);
-    return this._storage.updateTriples(triples);
+    return this._storage.updateTriples('subjects', triples);
 }
 
 SubjectService.prototype._findById = function (id) {
@@ -38,7 +38,7 @@ SubjectService.prototype._findById = function (id) {
 }
 
 SubjectService.prototype._findAll = function () {
-    var matchingTriples = this._storage.find(null, rdf.type, custom.get('Subject'));
+    var matchingTriples = this._storage.find(null, rdf.type, custom.subject.Subject);
     var subjects = [];
     matchingTriples.forEach(function (triple) {
         subjects.push(this._findById(triple.subject));
@@ -51,35 +51,28 @@ SubjectService.prototype._composeInstance = function (id, triples) {
     subject.id = id;
     triples.forEach(function (triple) {
         switch (triple.predicate) {
-            case custom.get('name'):
+            case custom.subject.Subject:
                 subject.name = getValue(triple.object);
                 break;
 
-            case custom.get('task'):
-                subject.task = getValue(triple.object);
-                break;
-
-            case custom.get('teacher'):
-                subject.teacher = getValue(triple.object);
+            case custom.subject.field:
+                subject.field = triple.object;
                 break;
         }
     });
-    return student;
+    return subject;
 }
 
 SubjectService.prototype._composeTriples = function(id, params) {
     var triples = [];
     var uniqueUri = id || generateUri(params.name);
-    triples.push(createTriple(uniqueUri, rdf.type, custom.get('Subject')));
+    triples.push(createTriple(uniqueUri, rdf.type, custom.subject.Subject));
 
     if (params.name) {
-        triples.push(createTriple(uniqueUri, custom.get('name'), N3Util.createLiteral(params.name)));
+        triples.push(createTriple(uniqueUri, custom.subject.name, N3Util.createLiteral(params.name)));
     }
-    if (params.task) {
-        triples.push(createTriple(uniqueUri, custom.get('task'), N3Util.createLiteral(params.task)));
-    }
-    if (params.teacher) {
-        triples.push(createTriple(uniqueUri, custom.get('teacher'), params.teacher));
+    if (params.field) {
+        triples.push(createTriple(uniqueUri, custom.subject.field, N3Util.createLiteral(params.field)));
     }
 
     return triples;

@@ -17,7 +17,7 @@ function GroupService () {
 
 GroupService.prototype.add = function (params) {
 	var triples = this._composeTriples(null, params);
-	return this._storage.addTriples(triples);
+	return this._storage.addTriples('groups', triples);
 }
 
 GroupService.prototype.get = function (id) {
@@ -25,17 +25,17 @@ GroupService.prototype.get = function (id) {
 }
 
 GroupService.prototype.remove = function (id) {
-	return this._storage.removeTriples(id, null, null, true);
+	return this._storage.removeTriples('groups', id, null, null, true);
 }
 
 GroupService.prototype.update = function (id, params) {
     var triples = this._composeTriples(id, params);
     //special case for groups - it is a list
     if(params.students) {
-        this._storage.removeTriples(id, custom.get('studends'), null, false);
-        this._storage.addList(id, custom.get('students'), params.students);
+        this._storage.removeTriples('groups', id, custom.group.students, null, false);
+        this._storage.addList('groups', id, custom.group.students, params.students);
     }
-    return this._storage.updateTriples(triples);
+    return this._storage.updateTriples('groups', triples);
 }
 
 GroupService.prototype._findById = function (id) {
@@ -44,7 +44,8 @@ GroupService.prototype._findById = function (id) {
 }
 
 GroupService.prototype._findAll = function () {
-	var matchingTriples = this._storage.find(null, rdf.type, custom.get('Group'));
+	console.log(custom.group.Group);
+	var matchingTriples = this._storage.find(null, rdf.type, custom.group.Group);
 	var groups = [];
 	matchingTriples.forEach(function (triple) {
 		groups.push(this._findById(triple.subject));
@@ -58,23 +59,23 @@ GroupService.prototype._composeInstance = function (id, triples) {
 	group.id = id;
 	triples.forEach(function (triple) {
 		switch (triple.predicate) {
-			case custom.get('name'):
+			case custom.group.name:
 				group.name = getValue(triple.object);
 				break;
 
-			case custom.get('yearStarted'):
+			case custom.group.yearStarted:
 				group.yearStarted = getValue(triple.object);
 				break;
 
-			case custom.get('curator'):
-				group.curator = getValue(triple.object);
+			case custom.group.curator:
+				group.curator = triple.object;
 				break;
 
-			case custom.get('students'):
+			case custom.group.students:
 				group.students = self._fillStudentsList(triple.object);
 				break;
 
-			case custom.get('subjects'):
+			case custom.group.subjects:
 				group.subjects = self._storage.getList(triple.object);
 				break;
 		}
@@ -85,16 +86,16 @@ GroupService.prototype._composeInstance = function (id, triples) {
 GroupService.prototype._composeTriples = function(id, params) {
     var triples = [];
     var uniqueUri = id || generateUri(params.name);
-    triples.push(createTriple(uniqueUri, rdf.type, custom.get('Group')));
+    triples.push(createTriple(uniqueUri, rdf.type, custom.group.Group));
 
     if (params.name) {
-        triples.push(createTriple(uniqueUri, custom.get('name'), N3Util.createLiteral(params.name)));
+        triples.push(createTriple(uniqueUri, custom.group.name, N3Util.createLiteral(params.name)));
     }
     if (params.yearStarted) {
-        triples.push(createTriple(uniqueUri, custom.get('yearStarted'), N3Util.createLiteral(params.yearStarted)));
+        triples.push(createTriple(uniqueUri, custom.group.yearStarted, N3Util.createLiteral(params.yearStarted)));
     }
     if (params.curator) {
-        triples.push(createTriple(uniqueUri, custom.get('curator'), params.curator));
+        triples.push(createTriple(uniqueUri, custom.group.curator, params.curator));
     }
     return triples;
 };

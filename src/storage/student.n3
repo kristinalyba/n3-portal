@@ -1,0 +1,90 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix vocab: <vocab#>.
+
+@prefix student: <student#>.
+@prefix group: <group#>.
+
+student:Student a owl:Class;
+         rdfs:subClassOf vocab:Person.
+
+student:belongsToGroup a rdf:ObjectProperty;
+         a owl:SymmetricProperty;
+         rdfs:domain student:Student;
+         rdfs:range group:Group.
+
+student:GeorgiiAristov a student:Student;
+    vocab:firstName "Georgii";
+    vocab:lastName "Aristov";
+    vocab:fullName "Georgii Aristov";
+    vocab:dateOfBirth "1992-05-03";
+    vocab:mobilePhone "123456789";
+    vocab:email "georgii@gmail.com";
+    student:belongsToGroup group:DA42_123.
+
+student:SergiiDenysov a student:Student;
+    vocab:firstName "Sergii";
+    vocab:lastName "Denysov";
+    vocab:fullName "Sergii Denysov";
+    vocab:dateOfBirth "1992-01-01";
+    vocab:mobilePhone "123456789";
+    vocab:email "denysov@email.com";
+    student:belongsToGroup group:DA42_123.
+
+student:OlenaGolovan a student:Student;
+    vocab:firstName "Olena";
+    vocab:lastName "Golovan";
+    vocab:fullName "Olena Golovan";
+    vocab:dateOfBirth "1992-01-01";
+    vocab:mobilePhone "123456789";
+    vocab:email "olena@email.com";
+    student:belongsToGroup group:DA42_123.
+
+student:OksanaOksanivna a student:Student;
+    vocab:firstName "Oksana";
+    vocab:lastName "Oksanivna";
+    vocab:fullName "Oksana Oksanivna";
+    vocab:dateOfBirth "1992-01-01";
+    vocab:mobilePhone "123456789";
+    vocab:email "oksana@email.com";
+    student:belongsToGroup group:DA42_123.
+
+student:ArtemArtemov a student:Student;
+    vocab:firstName "Artem";
+    vocab:lastName "Artemov";
+    vocab:fullName "Artem Artemov";
+    vocab:dateOfBirth "1992-02-02";
+    vocab:mobilePhone "923847575";
+    vocab:email "artem@email.com";
+    student:belongsToGroup group:DA42_123.
+
+student:KristinaLyba a student:Student;
+    vocab:firstName "Kristina";
+    vocab:lastName "Lyba";
+    vocab:fullName "Kristina Lyba";
+    vocab:dateOfBirth "1993-01-20";
+    vocab:mobilePhone "123456789";
+    vocab:email "kristina@email.com";
+    student:belongsToGroup group:DA42_123.
+
+student:SergiiDenysovich a student:Student;
+    vocab:firstName "Sergii";
+    vocab:lastName "Denysovich";
+    vocab:fullName "Sergii Denysovich";
+    vocab:dateOfBirth "1992-01-01";
+    vocab:mobilePhone "123456789";
+    vocab:email "denysovich@email.com";
+    student:belongsToGroup group:DA42_123.
+
+student:IrynaSukhomlin a student:Student;
+    vocab:firstName "Iryna";
+    vocab:lastName "Sukhomlin";
+    vocab:fullName "Iryna Sukhomlin";
+    vocab:dateOfBirth "1992-03-03";
+    vocab:mobilePhone "8464337483";
+    vocab:email "iryna@email.com";
+    student:belongsToGroup group:DA42_123.
+    

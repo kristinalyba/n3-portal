@@ -4,176 +4,204 @@ var replaceStream = require('replacestream');
 var vocabs        = require('linkeddata-vocabs');
 var path          = require('path');
 
-var CUSTOM_PREFIX = 'custom.n3#';
-var EMPTY_PREFIX = '#';
+var FIELD_PREFIX        = 'field#';
+var GROUP_PREFIX        = 'group#';
+var STUDENT_PREFIX      = 'student#';
+var SUBJECT_PREFIX      = 'subject#';
+var TEACHER_PREFIX      = 'teacher#';
+var CUSTOM_VOCAB_PREFIX = 'vocab#';
 
 function N3Storage () {
-	this._storage = N3.Store();
-	this._storagePath = path.join(__dirname + '/storage.n3');
-	this._prefixes = { prefixes: {
-		cstm: CUSTOM_PREFIX,
-		'': EMPTY_PREFIX,
-		rdf: vocabs.rdf
-	}};
+    this._storage = N3.Store();
+    this._prefixes = { prefixes: {
+        field: FIELD_PREFIX,
+        group: GROUP_PREFIX,
+        student: STUDENT_PREFIX,
+        subject: SUBJECT_PREFIX,
+        teacher: TEACHER_PREFIX,
+        vocab: CUSTOM_VOCAB_PREFIX,
+        rdfs: vocabs.rdf,
+        xsd: vocabs.xsd,
+        rdf: vocabs.rdf,
+        owl: vocabs.owl
+    }};
 
-	var parser = N3.Parser(),
-		rdfStream = fs.createReadStream(this._storagePath);
-		
-	parser.parse(rdfStream, function (error, triple, prefixes) {
-	    if (error) {
-	    	console.log(error);
-	    }
+    this._initStorage();
+};
 
-	    if(triple)
-	    {
-	    	this._storage.addTriple(triple.subject, triple.predicate, triple.object);
-	    }
-	 }.bind(this));
+N3Storage.prototype._initStorage = function () {
+    var self = this;
+    self._entities = {
+        'students': path.join(__dirname + '/student.n3'),
+        'subjects': path.join(__dirname + '/subject.n3'),
+        'groups': path.join(__dirname + '/group.n3'),
+        'teachers': path.join(__dirname + '/teacher.n3'),
+        'vocab': path.join(__dirname + '/vocabulary.n3')
+    };
 
-	console.log('===============Storage initialized================');
-}
+    var parser = N3.Parser();
+
+    //parse all entity storages to Storage graph in memory
+    Object.keys(self._entities).forEach(function (entityName) {
+        var rdfStream = fs.createReadStream(self._entities[entityName]);
+
+        parser.parse(rdfStream, function (error, triple, prefixes) {
+            if (error) {
+                console.log(error);
+            }
+
+            if(triple)
+            {
+                self._storage.addTriple(triple.subject, triple.predicate, triple.object);
+                console.log(triple);
+            }
+        });
+    });
+};
 
 N3Storage.prototype.find = function (subject, predicate, object) {
-	return this._storage.find(subject, predicate, object);
-}
+    var result = this._storage.find(subject, predicate, object);
+    console.log(result);
+    return result;
+};
 
-N3Storage.prototype.addTriples = function (triples) {
-	var writeStream = fs.createWriteStream(this._storagePath, {'flags': 'a'});
-	writeStream.write('\n', 'utf8');
-	var writer = N3.Writer(writeStream, this._prefixes);
+N3Storage.prototype.addTriples = function (entityName, triples) {
+    var writeStream = fs.createWriteStream(this._entities[entityName], {'flags': 'a'});
+    writeStream.write('\n', 'utf8');
+    var writer = N3.Writer(writeStream, this._prefixes);
 
-	writer.addTriples(triples);
-	writer.end();
+    writer.addTriples(triples);
+    writer.end();
 
-	writeStream.on('error', function (error) {console.log(error)} );
-	writeStream.on('finish', function () {
-		this._storage.addTriples(triples);
-		return true;
-	}.bind(this));
-}
+    writeStream.on('error', function (error) {console.log(error)} );
+    writeStream.on('finish', function () {
+        this._storage.addTriples(triples);
+        return true;
+    }.bind(this));
+};
 
-N3Storage.prototype.addList = function (subject, predicate, object) {
-	var writeStream = fs.createWriteStream(this._storagePath, {'flags': 'a'});
-	writeStream.write('\n', 'utf8');
-	var writer = N3.Writer(writeStream, this._prefixes);
+N3Storage.prototype.addList = function (entityName, subject, predicate, object) {
+    var writeStream = fs.createWriteStream(this._entities[entityName], {'flags': 'a'});
+    writeStream.write('\n', 'utf8');
+    var writer = N3.Writer(writeStream, this._prefixes);
 
-	var list = writer.list(object);
-	writer.addTriples(subject, predicate, list);
-	writer.end();
+    var list = writer.list(object);
+    writer.addTriples(subject, predicate, list);
+    writer.end();
 
-	writeStream.on('error', function (error) {console.log(error)} );
-	writeStream.on('finish', function () {
-		this._storage.addTriples(subject, predicate, list);
-		return true;
-	}.bind(this));
-}
+    writeStream.on('error', function (error) {console.log(error)} );
+    writeStream.on('finish', function () {
+        this._storage.addTriples(subject, predicate, list);
+        return true;
+    }.bind(this));
+};
 
 //isObject is a flag to specify if to remove whole object with this subject or just triple
-N3Storage.prototype.removeTriples = function (subject, predicate, object, isObject) {
-   	return this._traverseStorage({subject: subject, predicate: predicate, object: object}, removeTripleFn, {isObject: isObject});
-}
+N3Storage.prototype.removeTriples = function (entityName, subject, predicate, object, isObject) {
+    return this._traverseStorage(entityName, {subject: subject, predicate: predicate, object: object}, removeTripleFn, {isObject: isObject});
+};
 
 //newValue is a new value for triple with subject and predicate
-N3Storage.prototype.updateTriple = function (subject, predicate, object, newValue) {
-	return this._traverseStorage({subject: subject, predicate: predicate, object: object}, updateTripleFn, {newValue: newValue});
-}
+N3Storage.prototype.updateTriple = function (entityName, subject, predicate, object, newValue) {
+    return this._traverseStorage(entityName, {subject: subject, predicate: predicate, object: object}, updateTripleFn, {newValue: newValue});
+};
 
-N3Storage.prototype._traverseStorage = function (targetTriple, filterFn, opts) {
-	var self = this;
-	var tempStoragePath = self._storagePath + '_temp';
-	fs.rename(self._storagePath, tempStoragePath, function () {
-		var parser = N3.Parser();
-		var writeStream = fs.createWriteStream(self._storagePath, {'flags': 'a'});
-		var writer = N3.Writer(writeStream, self._prefixes);
-		var rdfStream = fs.createReadStream(tempStoragePath);
-		var triples = [];
-		parser.parse(rdfStream, function (error, nextTriple, prefixes) {
-		    if (error) {
-		    	console.log(error);
-		    }
+N3Storage.prototype._traverseStorage = function (entityName, targetTriple, filterFn, opts) {
+    var self = this;
+    var tempStoragePath = self._entities[entityName] + '_temp';
+    fs.rename(self._entities[entityName], tempStoragePath, function () {
+        var parser = N3.Parser();
+        var writeStream = fs.createWriteStream(self._entities[entityName], {'flags': 'a'});
+        var writer = N3.Writer(writeStream, self._prefixes);
+        var rdfStream = fs.createReadStream(tempStoragePath);
+        var triples = [];
+        parser.parse(rdfStream, function (error, nextTriple, prefixes) {
+            if (error) {
+                console.log(error);
+            }
 
-		    if(nextTriple)
-			{
-				var filtered = filterFn(targetTriple, nextTriple, opts);
-				if (filtered) { 
-					triples.push(filtered);
-				}
-			} else {
-				//finished, write to storage and close the stream
-				writer.addTriples(triples);
-				writer.end();
-			}
-	 	});
-	 	writeStream.on('error', function (error) {
-	 		console.log(error);
-	 		fs.rename(tempStoragePath, self._storagePath, function (error) {
-	 			console.log(error);
-	 			fs.unlink(tempStoragePath, function(error) {
-				  if (error) throw error;
-				  console.log('Traversing failed. Removing temp folder.');
-				});
-	 		});
-	 	});
-	 	writeStream.on('finish', function () {
-	 		fs.unlink(tempStoragePath, function (error) {
-				if (error) throw error;
-				console.log('Traversing finished. Removinng temp folder.');
-				return true;
-			});
-	 	});
-	});
+            if(nextTriple)
+            {
+                var filtered = filterFn(targetTriple, nextTriple, opts);
+                if (filtered) { 
+                    triples.push(filtered);
+                }
+            } else {
+                //finished, write to storage and close the stream
+                writer.addTriples(triples);
+                writer.end();
+            }
+        });
+        writeStream.on('error', function (error) {
+            console.log(error);
+            fs.rename(tempStoragePath, self._entities[entityName], function (error) {
+                console.log(error);
+                fs.unlink(tempStoragePath, function(error) {
+                  if (error) throw error;
+                  console.log('Traversing failed. Removing temp folder.');
+                });
+            });
+        });
+        writeStream.on('finish', function () {
+            fs.unlink(tempStoragePath, function (error) {
+                if (error) throw error;
+                console.log('Traversing finished. Removinng temp folder.');
+                return true;
+            });
+        });
+    });
 };
 
 N3Storage.prototype.getList = function (node, res) {
-	var res = res || [];
-	var list = this._storage.find(node);
-	var firstVal = list[0].object;
-	var restVal = list[1].object;
-	res.push(firstVal);
-	while(restVal !== vocabs.rdf.nil) {
-		return this.getList(restVal, res);
-	}
-	return res;
+    var res = res || [];
+    var list = this._storage.find(node);
+    var firstVal = list[0].object;
+    var restVal = list[1].object;
+    res.push(firstVal);
+    while(restVal !== vocabs.rdf.nil) {
+        return this.getList(restVal, res);
+    }
+    return res;
 };
 
 ////////////////////////
 ////// HELPERS /////////
 
 function updateTripleFn (targetTriple, nextTriple, opts) {
-	var resultTriple = null;
-	if (!equel(targetTriple, nextTriple)){
-    	resultTriple = nextTriple;
+    var resultTriple = null;
+    if (!equel(targetTriple, nextTriple)){
+        resultTriple = nextTriple;
     } else {
-    	var parseObject = nextTriple.object.split('#');
-    	var length = parseObject.length;
-    	parseObject[length - 1] = opts.newValue;
-    	nextTriple.object = parseObject.join('#');
-    	resultTriple = nextTriple;
+        var parseObject = nextTriple.object.split('#');
+        var length = parseObject.length;
+        parseObject[length - 1] = opts.newValue;
+        nextTriple.object = parseObject.join('#');
+        resultTriple = nextTriple;
     }
     return resultTriple;
 }
 
 function removeTripleFn (targetTriple, nextTriple, opts) {
-	var resultTriple = null;
-	if (opts.isObject) {
-		if (nextTriple.subject !== targetTriple.subject){
-	    	resultTriple = nextTriple;
-	    }
-	} else {
-		if (!equel(targetTriple, nextTriple)) {
-			resultTriple = nextTriple;
-		}
-	}
+    var resultTriple = null;
+    if (opts.isObject) {
+        if (nextTriple.subject !== targetTriple.subject){
+            resultTriple = nextTriple;
+        }
+    } else {
+        if (!equel(targetTriple, nextTriple)) {
+            resultTriple = nextTriple;
+        }
+    }
     return resultTriple;
 }
 
 function equel(first, next) {
-	return (first.subject === next.subject) && (first.predicate === next.predicate) && (first.object === next.object);
+    return (first.subject === next.subject) && (first.predicate === next.predicate) && (first.object === next.object);
 }
 
 ////////////////////////
 ////// EXPORTS /////////
 
 module.exports = {
-		storage: new N3Storage()
-	}
+        storage: new N3Storage()
+    }

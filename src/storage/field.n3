@@ -1,0 +1,31 @@
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+
+@prefix field: <field#>.
+@prefix subject: <subject#>.
+@prefix student: <student#>.
+@prefix teacher: <teacher#>.
+@prefix group: <group#>.
+@prefix vocab: <vocab#>.
+
+
+field:Field a rdf:Class;
+		rdfs:subClassOf owl:Thing.
+
+field:name a rfd:Property;
+		rdfs:domain subject:Subject;
+		rdfs:Range xsd:string.
+
+field:Humanities a field:Field;
+    			field:name "Humanities".
+
+field:NaturalScience a field:Field;
+    				field:name "Natural science".
+
+field:SocialScience a field:Field;
+    				field:name "Social science".
+
+field:Engineering_ComputerScience a field:Field;
+  								  field:name "Engineering & Computer science".

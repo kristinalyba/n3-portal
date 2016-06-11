@@ -1,0 +1,34 @@
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+
+@prefix vocab: <vocab#>.
+
+vocab:Person a owl:Class;
+		rdfs:subClassOf owl:Thing.
+
+vocab:firstName a rdf:Property;
+		   rdfs:domain vocab:Person;
+		   rdfs:range xsd:string.
+
+vocab:lastName a rdf:Property;
+		  rdfs:domain vocab:Person;
+		  rdfs:range xsd:string.
+
+vocab:fullName a rdf:Property;
+		  rdfs:domain vocab:Person;				
+		  rdfs:range xsd:string.
+
+vocab:dateOfBirth a rdf:Property;
+		 rdfs:domain vocab:Person;
+		 rdfs:range xsd:dateTime.
+
+vocab:mobilePhone a rdf:Property;
+		 rdfs:domain vocab:Person;
+		 rdfs:range xsd:string.
+
+vocab:email a rdf:Property;
+		 rdfs:domain vocab:Person;
+		 rdfs:range xsd:string.
+

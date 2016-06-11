@@ -1,0 +1,140 @@
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+
+@prefix field: <field#>.
+@prefix subject: <subject#>.
+
+
+subject:Subject a owl:Class;
+	   rdfs:subClassOf owl:Thing.
+
+subject:name a rdf:Property;
+		rdfs:domain subject:Subject;
+		rdfs:range xsd:string.
+
+subject:field a rdf:Property;
+		 rdfs:domain subject:Subject;
+		 rdfs:range field:Field.
+
+subject:ProgaAlgLang a subject:Subject;
+ 					 subject:name "Programming and Algorithmic languages";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:IntroInfoTech a subject:Subject;
+ 					 subject:name "Introduction into Information Technologies";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:DataStrAndAlgs a subject:Subject;
+ 					 subject:name "Data structures and algorithms";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:AlgsAndConstrAn a subject:Subject;
+ 					 subject:name "Algorithmic construction and analysis";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:Electronics a subject:Subject;
+ 					 subject:name "Electronics and electrical engineering";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:OOP a subject:Subject;
+ 					 subject:name "Object oriented programming";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:CompGeometry a subject:Subject;
+ 					 subject:name "Computational Geometry";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:CompCircuits a subject:Subject;
+ 					 subject:name "Computer circuit technology";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:AnOfDigitalCircuits a subject:Subject;
+ 					 subject:name "Analysis of digital circuits";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:InfoAndCodingTheory a subject:Subject;
+ 					 subject:name "Information and coding theory";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:OS a subject:Subject;
+ 					 subject:name "Operating systems";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:TheoryOfProgLang a subject:Subject;
+ 					 subject:name "Theory of programming languages";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:ArchOfCompSys a subject:Subject;
+ 					 subject:name "Architecture of Computer Systems";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:DataBases a subject:Subject;
+ 					 subject:name "Databases and information methods";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:DSP a subject:Subject;
+ 					 subject:name "Digital signal processing";
+    				 subject:field field:Engineering_ComputerScience.
+
+subject:Physics a subject:Subject;
+ 					 subject:name "Physics";
+    				 subject:field field:NaturalScience.
+
+subject:DiscreteMath a subject:Subject;
+ 					 subject:name "Discrete mathematics";
+    				 subject:field field:NaturalScience.
+
+subject:NumericalMethods a subject:Subject;
+ 					 subject:name "Numerical methods";
+    				 subject:field field:NaturalScience.
+
+subject:ProbabilityAndStatistics a subject:Subject;
+ 					 subject:name "Probability theory and mathematical statistics";
+    				 subject:field field:NaturalScience.
+
+subject:OptimizationMethods a subject:Subject;
+ 					 subject:name "Optimization methods";
+    				 subject:field field:NaturalScience.
+
+subject:Economics a subject:Subject;
+ 					 subject:name "Economics of enterprise";
+    				 subject:field field:NaturalScience.
+
+subject:Logics a subject:Subject;
+ 					 subject:name "Logics";
+    				 subject:field field:NaturalScience.
+
+subject:UkrainianLang a subject:Subject;
+ 					 subject:name "Ukrainian language";
+    				 subject:field field:Humanities.
+
+subject:English a subject:Subject;
+ 					 subject:name "Foreign language: English";
+    				 subject:field field:Humanities.
+
+subject:Philosophy a subject:Subject;
+ 					 subject:name "Philosophy";
+    				 subject:field field:Humanities.
+
+subject:Psychology a subject:Subject;
+ 					 subject:name "Psychology";
+    				 subject:field field:Humanities.
+
+subject:Politology a subject:Subject;
+ 					 subject:name "Politology";
+    				 subject:field field:SocialScience.
+
+subject:UkrainianCulture a subject:Subject;
+ 					 subject:name "Ukrainian culture history";
+    				 subject:field field:SocialScience.
+
+subject:LifeSecurity a subject:Subject;
+ 					 subject:name "Life security and  labor safety";
+    				 subject:field field:SocialScience.
+
+subject:HistoryOfUkraine a subject:Subject;
+ 					 subject:name "History of Ukraine";
+    				 subject:field field:SocialScience.
+                     

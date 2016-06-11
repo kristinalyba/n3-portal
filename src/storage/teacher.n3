@@ -1,0 +1,87 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+
+@prefix vocab: <vocab#>.
+@prefix subject: <subject#>.
+@prefix teacher: <teacher#>.
+
+teacher:Teacher a owl:Class;
+		 rdfs:subClassOf vocab:Person.
+
+teacher:teachesSubject a rdf:Property;
+		        rdfs:domain vocab:Teacher;
+		        rdfs:range vocab:Subject.
+teacher:title a rdf:Property;
+		 rdfs:domain vocab:Teacher;
+		 rdfs:range rdfs:Literal.
+
+teacher:Petro4234 a teacher:Teacher;
+    vocab:firstName "Petro";
+    vocab:lastName "Ivanov";
+    vocab:fullName "Petro Ivanov";
+    vocab:dateOfBirth "1960-01-01";
+    vocab:mobilePhone "123456789";
+    vocab:email "petro@gmail.com";
+    teacher:teachesSubject (subject:CompCircuits subject:Electronics);
+    teacher:title "Docent".
+
+teacher:Volodymyr4234 a teacher:Teacher;
+    vocab:firstName "Volodymyr";
+    vocab:lastName "Plakhuta";
+    vocab:fullName "Volodymyr Plakhuta";
+    vocab:dateOfBirth "1973-01-02";
+    vocab:mobilePhone "123456789";
+    vocab:email "volodymyr@gmail.com";
+    teacher:teachesSubject (subject:InfoAndCodingTheory);
+    teacher:title "Professor".
+    
+teacher:Vasil4234 a teacher:Teacher;
+    vocab:firstName "Vasil";
+    vocab:lastName "Burenkov";
+    vocab:fullName "Vasil Burenkov";
+    vocab:dateOfBirth "1968-03-01";
+    vocab:mobilePhone "123456789";
+    vocab:email "vasil@gmail.com";
+    teacher:teachesSubject (subject:DataBases);
+    teacher:title "Docent".
+  
+teacher:Dmytro4234 a teacher:Teacher;
+    vocab:firstName "Dmytro";
+    vocab:lastName "Artukh";
+    vocab:fullName "Dmytro Artukh";
+    vocab:dateOfBirth "1988-01-04";
+    vocab:mobilePhone "123456789";
+    vocab:email "dmytro@gmail.com";
+    teacher:teachesSubject (subject:Physics);
+    teacher:title "Aspirant".
+
+teacher:Anna4234 a teacher:Teacher;
+    vocab:firstName "Anna";
+    vocab:lastName "Becyk";
+    vocab:fullName "Anna Becyk";
+    vocab:dateOfBirth "1988-03-03";
+    vocab:mobilePhone "123456789";
+    vocab:email "anna@gmail.com";
+    teacher:teachesSubject (subject:ProbabilityAndStatistics subject:DiscreteMath);
+    teacher:title "Docent".
+
+teacher:Pavlo4234 a teacher:Teacher;
+    vocab:firstName "Pavlo";
+    vocab:lastName "Volkov";
+    vocab:fullName "Pavlo Volkov";
+    vocab:dateOfBirth "1978-03-30";
+    vocab:mobilePhone "123456789";
+    vocab:email "pavlo@gmail.com";
+    teacher:teachesSubject (subject:UkrainianLang subject:UkrainianCulture);
+    teacher:title "Docent".
+
+teacher:Kirill4234 a teacher:Teacher;
+    vocab:firstName "Kirill";
+    vocab:lastName "Letuchiy";
+    vocab:fullName "Kirill Letuchiy";
+    vocab:dateOfBirth "1975-09-30";
+    vocab:mobilePhone "123456789";
+    vocab:email "kirill@gmail.com";
+    teacher:teachesSubject (subject:TheoryOfProgLang);
+    teacher:title "Aspirant".

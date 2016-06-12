@@ -4,11 +4,7 @@
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0-beta.1.2.1",
       "aurelia-framework": "npm:aurelia-framework@^1.0.0-beta.1.2.5",
       "aurelia-http-client": "npm:aurelia-http-client@^1.0.0-beta.1.2.2",
-      "bootstrap": "github:twbs/bootstrap@^3.3.6",
-      "fs": "github:jspm/nodelibs-fs@^0.1.2",
-      "linkeddata-vocabs": "npm:linkeddata-vocabs@^0.11.1",
-      "n3": "npm:n3@^0.4.5",
-      "reasoner": "npm:reasoner@^0.3.0"
+      "bootstrap": "github:twbs/bootstrap@^3.3.6"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
@@ -21,7 +17,6 @@
     "express": "^4.13.4",
     "jspm": "^0.16.35",
     "linkeddata-vocabs": "^0.11.1",
-    "n3": "^0.4.5",
-    "replacestream": "^4.0.0"
+    "n3": "^0.4.5"
   }
 }

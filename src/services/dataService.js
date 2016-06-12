@@ -38,6 +38,14 @@ export class DataService {
 		return this.client.get('groups');
 	}
 
+	getAllByType (type) {
+		return this.client.get('getAllByType/' + encodeURIComponent(type));
+	}
+
+	getAllTypes () {
+		return this.client.get('getAllTypes');
+	}
+
 	createGroup () {
 
 	}

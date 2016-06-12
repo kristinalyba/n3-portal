@@ -8,6 +8,7 @@ var teachers    = dataService.teachers;
 var subjects    = dataService.subjects;
 var tasks       = dataService.tasks;
 var fields       = dataService.fields;
+var common       = dataService.common;
 
 var app = express();
 
@@ -27,6 +28,18 @@ apiRouter.get('/', function(req, res) {
     res.json({ message: 'Hoorray! api is working!!!!'});   
 });
 
+// =========Common ============
+apiRouter.route('/getAllByType/:type')
+    .get(function(req, res) {
+        var result = common.getByType(req.params.type);
+        res.json(result);
+    });
+
+apiRouter.route('/getAllTypes')
+    .get(function(req, res) {
+        var result = common.getTypes();
+        res.json(result);
+    });
 // ========= Groups ===========
 apiRouter.route('/groups')
     .get(function(req, res) {

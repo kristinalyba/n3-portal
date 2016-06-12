@@ -64,7 +64,6 @@ StudentService.prototype._composeInstance = function (id, triples) {
                 break;
 
             case custom.vocab.dateOfBirth:
-                console.log(triple.object);
                 student.dateOfBirth = getValue(triple.object);
                 break;
 

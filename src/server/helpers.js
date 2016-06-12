@@ -1,9 +1,11 @@
 var N3Util = require('N3').Util;
+var customVocabulary = require('./customVocab')
 
 module.exports = {
 	getValue: getValue,
 	createTriple: createTriple,
-	generateUri: generateUri
+	generateUri: generateUri,
+	getTypeUri: getTypeUri
 };
 
 function getValue(uri) {
@@ -36,4 +38,21 @@ function s4() {
   return Math.floor((1 + Math.random()) * 0x10000)
     .toString(16)
     .substring(1);
+}
+
+function getTypeUri (type) {
+	if(type.indexOf('#') > -1) {
+		console.log('returned');
+		return type;
+	}
+
+	var typeUri = type;
+	Object.keys(customVocabulary).forEach( function (vocabName) {
+		var vocab = customVocabulary[vocabName];
+		if (vocab[type]) {
+			typeUri = vocab[type];
+		}
+	});
+
+	return typeUri;
 }

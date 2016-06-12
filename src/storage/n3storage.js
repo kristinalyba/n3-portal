@@ -1,6 +1,5 @@
 var N3            = require('N3');
 var fs            = require('fs');
-var replaceStream = require('replacestream');
 var vocabs        = require('linkeddata-vocabs');
 var path          = require('path');
 
@@ -190,6 +189,10 @@ N3Storage.prototype.findByType = function (type) {
             return triple.object !== vocabs.owl.Class && self.isOfType(triple.subject, type);
         });
 }
+
+N3Storage.prototype.getTypes = function() {
+    return this._storage.find(null, vocabs.rdf.type, vocabs.owl.Class);
+};
 
 
 ////////////////////////

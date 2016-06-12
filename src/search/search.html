@@ -1,0 +1,41 @@
+<template>
+	 <require from="../converters/filter"></require>
+	 <require from="../converters/parseUri"></require>
+	<div class="row">
+	    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+	      <div class="sidebar-nav">
+	        <div class="navbar navbar-default">
+	            <ul class="nav navbar-nav">
+	              <li><a>Search</a></li>
+	            </ul>
+	        </div>
+	      </div>
+	    </div>
+		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10"> 
+			<div class="panel-view">
+				<div class="panel panel-default">
+					<div class="panel-heading">Search</div>
+					<div class="input-group">
+				      <input type="text" class="form-control" placeholder="Search..." value.bind="searchPattern & throttle:850">
+				      <div class="input-group-btn">
+				        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${type | parseUri}<span class="caret"></span></button>
+				        <ul class="dropdown-menu dropdown-menu-right">
+				          <li repeat.for="type of types"><a href="#" click.delegate="searchByType(type)">${type | parseUri}</a></li>
+				        </ul>	
+				      </div>
+				    </div>
+					<table class="table" align="left" if.bind="searchList">
+						<tr>
+							<th>№</th>
+							<th>Found URI</th>
+						</tr>
+				    	<tr repeat.for="value of searchList | filter: searchPattern" >
+				    		<td>${$index+1}</td>
+				    		<td>${value}</td>
+				    	</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

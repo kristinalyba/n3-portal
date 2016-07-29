@@ -65,7 +65,7 @@ SubjectService.prototype._composeInstance = function (id, triples) {
 
 SubjectService.prototype._composeTriples = function(id, params) {
     var triples = [];
-    var uniqueUri = id || generateUri(params.name);
+    var uniqueUri = id || generateUri('student#', params.name);
     triples.push(createTriple(uniqueUri, rdf.type, custom.subject.Subject));
 
     if (params.name) {

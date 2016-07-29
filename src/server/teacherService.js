@@ -89,7 +89,7 @@ TeacherService.prototype._composeInstance = function (id, triples) {
 
 TeacherService.prototype._composeTriples = function(id, params) {
     var triples = [];
-    var uniqueUri = id || generateUri(params.firstName + params.lastName);
+    var uniqueUri = id || generateUri(custom.teacher.Teacher, params.firstName + params.lastName);
     triples.push(createTriple(uniqueUri, rdf.type, custom.teacher.Teacher));
     triples.push(createTriple(uniqueUri, custom.vocab.fullName, params.firstName + ' ' + params.lastName));
 

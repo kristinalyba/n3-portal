@@ -18,15 +18,15 @@ export class DataService {
 	}
 
 	createStudent (params) {
-		return this.client.put('students?firstName=Allo&lastName=Garaj&mobilePhone=kuku');
+		return this.client.put('students?' + serialize(params));
 	}
 
 	updateStudent (params) {
-		return this.client.post(encodeURIComponent(id));
+		return this.client.post('students?' + encodeURIComponent(params));
 	}
 
 	deleteStudent (id) {
-		return this.client.delete(encodeURIComponent(id));
+		return this.client.delete('students/' + encodeURIComponent(id));
 	}
 
 	// groups
@@ -38,6 +38,50 @@ export class DataService {
 		return this.client.get('groups');
 	}
 
+	//teachers
+	getTeacher (id) {
+		return this.client.get('teachers/' + encodeURIComponent(id));
+	}
+
+	getTeachers () {
+		return this.client.get('teachers');
+	}
+
+	createTeacher (params) {
+		return this.client.put('teachers?' + encodeURIComponent(params));
+	}
+
+	updateTeacher (params) {
+		return this.client.post('teachers?' + encodeURIComponent(params));
+	}
+
+	deleteTeacher (id) {
+		return this.client.delete('teachers/' + encodeURIComponent(id));
+	}
+
+	//subjects
+	getSubject (id) {
+		return this.client.get('subjects/' + encodeURIComponent(id));
+	}
+
+	getSubjects () {
+		return this.client.get('subjects');
+	}
+
+	createSubject (params) {
+		return this.client.put('subjects?' + encodeURIComponent(params));
+	}
+
+	updateSubject (params) {
+		return this.client.post('subjects?' + encodeURIComponent(id));
+	}
+
+	deleteSubject (id) {
+		return this.client.delete('subjects/' + encodeURIComponent(id));
+	}
+
+	//commomn
+
 	getAllByType (type) {
 		return this.client.get('getAllByType/' + encodeURIComponent(type));
 	}
@@ -46,19 +90,15 @@ export class DataService {
 		return this.client.get('getAllTypes');
 	}
 
-	createGroup () {
-
-	}
-
-	updateGroup () {
-
-	}
-
-	delereGroup () {
-
-	}
-
 }
 
+function serialize (obj) {
+  var str = [];
+  for(var p in obj)
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  return str.join("&");
+}
 
 

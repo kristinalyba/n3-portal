@@ -54,7 +54,7 @@ FieldService.prototype._composeInstance = function (id, triples) {
 
 FieldService.prototype._composeTriples = function(id, params) {
     var triples = [];
-    var uniqueUri = id || generateUri(params.name);
+    var uniqueUri = id || generateUri(custom.field.Field, params.name);
     triples.push(createTriple(uniqueUri, rdf.type, custom.field.Field));
 
     if (params.name) {

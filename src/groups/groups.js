@@ -31,6 +31,12 @@ export class Groups {
 		this.router.navigateToRoute('student', {groupId: this.group.id, edit: editMode});
 	}
 
+	removeStudent (id) {
+		var studentIndex = this.group.students.findIndex(student => student.id === id);
+		this.group.students = this.group.students.splice(studentIndex, 1);
+		this.dataService.deleteStudent(id);
+	}
+
 	navigateToGroup(editMode) {
 		this.router.navigateToRoute('group', {groupId: this.group.id, edit: editMode});
 	}

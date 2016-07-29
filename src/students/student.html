@@ -1,3 +1,87 @@
 <template>
-	There would be a form for editing or creating new student.
+<require from="../converters/parseUri"></require>
+<div class="row">
+  <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+    <div class="sidebar-nav">
+      <div class="navbar navbar-default">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Student</a></li>
+          </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
+  	<div class="panel-view">
+		<div class="bootstrap-iso">
+		 <div class="container-fluid">
+		  <div class="row">
+		   <div class="col-md-6 col-sm-6 col-xs-12">
+		    <form role = "form" submit.delegate = "addStudent(this)">
+		     <div class="form-group form-group-sm">
+		      <label class="control-label requiredField" for="fisrtname">
+		       First name
+		       <span class="asteriskField">
+		        *
+		       </span>
+		      </label>
+		      <input class="form-control" id="fisrtname" name="fisrtname" value.bind="formData.firstName" placeholder="First name" type="text"/>
+		     </div>
+		     <div class="form-group form-group-sm">
+		      <label class="control-label requiredField" for="lastname">
+		       Last name
+		       <span class="asteriskField">
+		        *
+		       </span>
+		      </label>
+		      <input class="form-control" id="lastname" name="lastname" value.bind="formData.lastName" placeholder="Last name" type="text"/>
+		     </div>
+		     <div class="form-group form-group-sm">
+		      <label class="control-label " for="dateOfBirth">
+		       Date of birth
+		      </label>
+		      <input class="form-control" id="dateOfBirth" name="dateOfBirth" value.bind="formData.dateOfBirth" placeholder="YYYY-MM-DD" type="text"/>
+		     </div>
+		     <div class="form-group form-group-sm">
+		      <label class="control-label " for="number">
+		       Mobile number
+		      </label>
+		      <input class="form-control" id="number" name="number" value.bind="formData.mobilePhone" placeholder="Mobile number" type="text"/>
+		     </div>
+		     <div class="form-group form-group-sm">
+		      <label class="control-label requiredField" for="email">
+		       Email
+		       <span class="asteriskField">
+		        *
+		       </span>
+		      </label>
+		      <input class="form-control" id="email" name="email" value.bind="formData.email" type="text"/>
+		     </div>
+		     <div class="form-group form-group-sm">
+		      <label class="control-label requiredField" for="group">
+		       Group
+		       <span class="asteriskField">
+		        *
+		       </span>
+		      </label>
+		      <select class="select form-control" id="group" name="group" value.bind="formData.belongsToGroup">
+		       <option value.bind="group" repeat.for="group of groups">
+		        ${group | parseUri}
+		       </option>
+		      </select>
+		     </div>
+		     <div class="form-group">
+		      <div>
+		       <button class="btn btn-primary " name="submit" type="submit">
+		        Submit
+		       </button>
+		      </div>
+		     </div>
+		    </form>
+		   </div>
+		  </div>
+		 </div>
+		</div>
+  	</div>
+  </div>
+</div>
 </template>

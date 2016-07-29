@@ -1,3 +1,32 @@
 <template>
-	Teachers
+	<div class="panel-view">
+		<div class="panel panel-default">
+			<div class="panel-heading">Teachers list</div>
+			<table class="table" align="left" if.bind="teachers.length">
+				<tr>
+					<th>№</th>
+					<th>Name</th>
+					<th>Date of Birth</th>
+					<th>Title</th>
+					<th>Phone Number</th>
+					<th>E-mail</th>
+					<th>Subject</th>
+					<th></th>
+					<th></th>
+				</tr>
+		    	<tr repeat.for="teacher of teachers">
+		    		<td>${$index+1}</td>
+		    		<td>${teacher.fullName}</td>
+		    		<td>${teacher.dateOfBirth}</td>
+		    		<td>${teacher.title}</td>
+		    		<td>${teacher.mobilePhone}</td>
+		    		<td>${teacher.email}</td>
+		    		<td>${teacher.teachesSubject}</td>
+		    		<td><button class="btn btn-primary" click.delegate="navigateToTeacher(teacher.id, true)">Edit</button></td>
+		    		<td><button class="btn btn-danger" click.delegate="remove(teacher.id)">Remove</button></td>
+		    	</tr>
+			</table>
+		</div>
+	</div>
+	<button class="btn btn-add" click.delegate="navigateToTeacher(teacher.id,false)">Add teacher</button>
 </template>

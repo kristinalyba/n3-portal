@@ -24,7 +24,9 @@ StudentService.prototype.get = function (id) {
 }
 
 StudentService.prototype.remove = function (id) {
-    return this._storage.removeTriples('students', id, null, null, true);
+    console.log('removing');
+    console.log(id);
+    //return this._storage.removeTriples('students', id, null, null, true);
 }
 
 StudentService.prototype.update = function (id, params) {
@@ -85,9 +87,12 @@ StudentService.prototype._composeInstance = function (id, triples) {
 
 StudentService.prototype._composeTriples = function(id, params) {
     var triples = [];
-    var uniqueUri = id || generateUri(params.firstName + params.lastName);
+    console.log(params.firstName);
+    var uniqueUri = id || generateUri('student#',
+        params.firstName+ params.lastName);
+
     triples.push(createTriple(uniqueUri, rdf.type, custom.student.Student));
-    triples.push(createTriple(uniqueUri, custom.vocab.fullName, params.firstName + ' ' + params.lastName));
+    triples.push(createTriple(uniqueUri, custom.vocab.fullName, N3Util.createLiteral(params.firstName + ' ' + params.lastName)));
 
     if (params.firstName) {
         triples.push(createTriple(uniqueUri, custom.vocab.firstName, N3Util.createLiteral(params.firstName)));

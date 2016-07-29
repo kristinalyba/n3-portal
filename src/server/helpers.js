@@ -30,7 +30,7 @@ function generateUri(prefix, data) {
 }
 
 function guid() {
-  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+  return '_' + s4() + s4() + '-' + s4() + '-' + s4() + '-' +
     s4() + '-' + s4() + s4() + s4();
 }
 
@@ -42,7 +42,6 @@ function s4() {
 
 function getTypeUri (type) {
 	if(type.indexOf('#') > -1) {
-		console.log('returned');
 		return type;
 	}
 

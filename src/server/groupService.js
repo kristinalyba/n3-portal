@@ -44,7 +44,6 @@ GroupService.prototype._findById = function (id) {
 }
 
 GroupService.prototype._findAll = function () {
-	console.log(custom.group.Group);
 	var matchingTriples = this._storage.find(null, rdf.type, custom.group.Group);
 	var groups = [];
 	matchingTriples.forEach(function (triple) {
@@ -85,7 +84,7 @@ GroupService.prototype._composeInstance = function (id, triples) {
 
 GroupService.prototype._composeTriples = function(id, params) {
     var triples = [];
-    var uniqueUri = id || generateUri(params.name);
+    var uniqueUri = id || generateUri(custom.group.Group, params.name);
     triples.push(createTriple(uniqueUri, rdf.type, custom.group.Group));
 
     if (params.name) {

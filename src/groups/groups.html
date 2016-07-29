@@ -21,6 +21,8 @@
 							<th>Date of Birth</th>
 							<th>Phone Number</th>
 							<th>E-mail</th>
+							<th></th>
+							<th></th>
 						</tr>
 				    	<tr repeat.for="student of group.students">
 				    		<td>${$index+1}</td>
@@ -28,11 +30,13 @@
 				    		<td>${student.dateOfBirth}</td>
 				    		<td>${student.mobilePhone}</td>
 				    		<td>${student.email}</td>
+				    		<td><button class="btn btn-primary" click.delegate="navigateToStudent(student.id, true)">Edit</button></td>
+				    		<td><button class="btn btn-danger" click.delegate="removeStudent(student.id)">Remove</button></td>
 				    	</tr>
 					</table>
 				</div>
 			</div>
-			<button class="btn btn-add" click.delegate="navigateToStudent(false)">Add student</button>
+			<button class="btn btn-add" click.delegate="navigateToStudent(null, false)">Add student</button>
 		</div>
 	</div>
 </template>

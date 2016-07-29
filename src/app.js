@@ -9,6 +9,7 @@ export class App {
       { route: 'search', name: 'search', moduleId: 'search/search', nav: true, title:'Search' },
       { route: 'login', name: 'login', moduleId: 'login/login' },
       { route: 'student', name: 'student', moduleId: 'students/student' },
+      { route: 'teacher', name: 'teacher', moduleId: 'teachers/teacher' },
       { route: 'group', name: 'group', moduleId: 'groups/group' }
     ]);
 
